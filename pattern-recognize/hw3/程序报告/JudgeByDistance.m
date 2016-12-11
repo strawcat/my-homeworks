@@ -1,0 +1,33 @@
+function Score =JudgeByDistance(feature,select)
+%
+% ????????????????
+% feature???????????????[1,5]??selcet???1~5?????
+% ??J1~J5???????
+% ???Score??????????????????????
+%
+[train_m,train_f] = preprocess('dataset3.txt',feature);
+% Average
+mm = (mean(train_m))';
+mf = (mean(train_f))';
+m=mean([train_m;train_f])';
+% Inter-Class Dispersion Matrix
+Sb=0.5*(mm-m)*(mm-m)'+0.5*(mf-m)*(mf-m)';
+% In-Class Dispersion Matrix
+cov_m=cov(train_m);  
+cov_f=cov(train_f);
+Sw=0.5*(cov_m+cov_f);  
+
+switch select
+    case 1
+        Score=trace(Sw+Sb);        
+    case 2
+        Score=trace(inv(Sw)*Sb);
+    case 3
+        Score=log(norm(Sb,2)/norm(Sw,2));
+    case 4
+        Score=trace(Sb)/trace(Sw);
+    case 5
+        Score=norm(Sb-Sw,2)/norm(Sw,2);
+end
+
+end
