@@ -1,5 +1,5 @@
 function label = cmeans_clustering(data,num)
-
+% data为样本数据，num为聚类数目
 [N n] = size(data);
 err_T = 0.001;
 % Randomly select clustering centers
@@ -37,6 +37,3 @@ for i = 1:N
     wcss = wcss + norm(data(i,:) - c(cmemorize(i),:));
 end
 fprintf('The WCSS is %f when the number of clusters is %d\n',wcss,num);
-%% ????
-% sil = silhouette(data,count,cmemorize,num);
-% fprintf('The Silhouette Coefficient is %f when the number of clusters is %d\n',sil,num);
